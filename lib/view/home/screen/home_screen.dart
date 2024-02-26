@@ -19,8 +19,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   late HomeBloc _homeBloc;
-  bool _isSelected = false;
-  int _isPriceSelected = -1;
+  int? _isPriceSelectedIndex = -1;
   List<ItemModel> _filteredModelList = itemList;
   @override
   void initState() {
@@ -48,11 +47,11 @@ class _HomeScreenState extends State<HomeScreen> {
           _filteredModelList = state.filteredList;
         }
         if (state is PriceRangeSuccessfulSelected) {
-          state.filteredList;
+          _filteredModelList = state.filteredList;
         }
         return SafeArea(
             child: CustomScrollView(
-          slivers: [_categoryList(), _priceList(), _filteredList()],
+          slivers: [_categoryList(), _priceList(state), _filteredList()],
         ));
       },
     );
@@ -67,24 +66,25 @@ class _HomeScreenState extends State<HomeScreen> {
             itemBuilder: (context, index) => CategoryItemCard(
                   index: index,
                   onPress: () {
-                    _isSelected = !_isSelected;
                     _homeBloc.add(OnCategorySelectionEvent(index: index));
                   },
                 )),
       ));
 
-  Widget _priceList() => SliverToBoxAdapter(
+  Widget _priceList(HomeState state) => SliverToBoxAdapter(
           child: SizedBox(
         height: 50,
         child: ListView.builder(
           scrollDirection: Axis.horizontal,
           itemCount: priceRangeList.length,
           itemBuilder: (context, index) => PriceListCard(
+            isSelected: _isPriceSelectedIndex == index,
             onPress: () {
-              _isPriceSelected = index;
+              _isPriceSelectedIndex =
+                  _isPriceSelectedIndex == index ? null : index;
+
               _homeBloc.add(OnPriceRangeSelectionEvent(index: index));
             },
-            isSelected: _isPriceSelected == index,
             index: index,
           ),
         ),

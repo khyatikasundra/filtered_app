@@ -45,7 +45,7 @@ List<ItemModel> itemList = [
       prices: 200,
       groceryCategory: GroceryCategory.fruit),
   ItemModel(
-      itemName: "Bananas", prices: 200, groceryCategory: GroceryCategory.fruit),
+      itemName: "Bananas", prices: 2000, groceryCategory: GroceryCategory.fruit),
   ItemModel(
       itemName: "Grapefruit",
       prices: 200,
@@ -57,14 +57,14 @@ List<ItemModel> itemList = [
   ItemModel(
       itemName: "Oranges", prices: 200, groceryCategory: GroceryCategory.fruit),
   ItemModel(
-      itemName: "Peaches", prices: 200, groceryCategory: GroceryCategory.fruit),
+      itemName: "Peaches", prices: 3000, groceryCategory: GroceryCategory.fruit),
   ItemModel(
       itemName: "Cinnamon",
-      prices: 15,
+      prices: 900,
       groceryCategory: GroceryCategory.herdsAndSpices),
   ItemModel(
       itemName: "Ginger",
-      prices: 20,
+      prices: 600,
       groceryCategory: GroceryCategory.herdsAndSpices),
   ItemModel(
       itemName: "Frosted Flakes",
@@ -76,7 +76,7 @@ List<ItemModel> itemList = [
       groceryCategory: GroceryCategory.herdsAndSpices),
   ItemModel(
       itemName: "Paprika",
-      prices: 18,
+      prices: 1500,
       groceryCategory: GroceryCategory.herdsAndSpices),
   ItemModel(
       itemName: "Asparagus",
@@ -90,7 +90,7 @@ List<ItemModel> itemList = [
       groceryCategory: GroceryCategory.vegetable),
   ItemModel(
       itemName: "Cauliflower",
-      prices: 200,
+      prices: 3500,
       groceryCategory: GroceryCategory.vegetable),
   ItemModel(
       itemName: "Corn",
@@ -104,6 +104,6 @@ List<ItemModel> itemList = [
       itemName: "Melons", prices: 200, groceryCategory: GroceryCategory.fruit),
   ItemModel(
       itemName: "Eggplant",
-      prices: 200,
+      prices: 550,
       groceryCategory: GroceryCategory.vegetable),
 ];

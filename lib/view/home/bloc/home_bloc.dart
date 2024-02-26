@@ -3,11 +3,12 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:filter_app/model/category_model.dart';
 import 'package:filter_app/model/item_model.dart';
+import 'package:filter_app/model/price_model.dart';
 import 'package:filter_app/view/home/bloc/home_event.dart';
 import 'package:filter_app/view/home/bloc/home_state.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
-  late List<ItemModel> _filteredList;
+  List<ItemModel> _filteredList = itemList;
   HomeBloc() : super(HomeInitialState(filteredList: itemList)) {
     on<OnCategorySelectionEvent>(_categorySelection);
     on<OnPriceRangeSelectionEvent>(_priceSelection);
@@ -30,7 +31,22 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   FutureOr<void> _priceSelection(
       OnPriceRangeSelectionEvent event, Emitter<HomeState> emit) {
-    emit(PriceRangeSuccessfulSelected(
-        filteredList: _filteredList));
+    _filteredList = _filteredList
+        .where((element) => priceRangeList.any((priceRange) {
+              if (priceRangeList[event.index].maxPrice == null &&
+                  priceRangeList[event.index].minPrice! <= element.prices) {
+                return true;
+              } else if (priceRangeList[event.index].minPrice == null &&
+                  priceRangeList[event.index].maxPrice! <= element.prices) {
+                return true;
+              } else if (priceRangeList[event.index].minPrice! <=
+                      element.prices &&
+                  priceRangeList[event.index].maxPrice! >= element.prices) {
+                return true;
+              }
+              return false;
+            }))
+        .toList();
+    emit(PriceRangeSuccessfulSelected(filteredList: _filteredList));
   }
 }

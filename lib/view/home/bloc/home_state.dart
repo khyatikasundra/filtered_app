@@ -23,7 +23,8 @@ class CategoryItemSuccessfulSelected extends HomeState {
 }
 
 class PriceRangeSuccessfulSelected extends HomeState {
-  const PriceRangeSuccessfulSelected({required super.filteredList});
-   @override
+  const PriceRangeSuccessfulSelected(
+      {required super.filteredList});
+  @override
   List<Object?> get props => [identityHashCode(this)];
 }
