@@ -46,6 +46,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
               }
               return false;
             }))
+            //hello
         .toList();
     emit(PriceRangeSuccessfulSelected(filteredList: _filteredList));
   }
