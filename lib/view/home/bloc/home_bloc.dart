@@ -11,7 +11,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   List<ItemModel> _filteredList = [];
   List<CategoryModel> _categoryList = [];
   List<PriceRangeModel> _priceList = [];
-  HomeBloc() : super(HomeInitialState(filteredList: itemList)) {
+  HomeBloc() : super(HomeInitialState()) {
     on<GetFilteredList>(_getFilteredList);
     on<OnCategorySelectionEvent>(_categorySelection);
     on<OnPriceRangeSelectionEvent>(_priceSelection);
@@ -64,7 +64,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     if (event.index == 0) {
       _filteredList = itemList;
     }
-    emit(PriceItemSelected(priceList: _priceList));
+    emit(HomeInitialState());
     emit(LoadingState());
     await Future.delayed(const Duration(seconds: 2));
     emit(FilteredItemSuccessfulSelected(filteredList: rangeList));

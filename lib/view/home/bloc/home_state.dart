@@ -8,10 +8,7 @@ class HomeState extends Equatable {
   List<Object?> get props => [];
 }
 
-class HomeInitialState extends HomeState {
-  final List<ItemModel> filteredList;
-  HomeInitialState({required this.filteredList});
-}
+class HomeInitialState extends HomeState {}
 
 class FilteredInitialListPassSuccessful extends HomeState {
   final List<ItemModel> filteredList;
@@ -37,10 +34,4 @@ class CategoryItemSelected extends HomeState {
   final List<CategoryModel> categoryList;
 
   CategoryItemSelected({required this.categoryList});
-}
-
-class PriceItemSelected extends HomeState {
-  final List<PriceRangeModel> priceList;
-
-  PriceItemSelected({required this.priceList});
 }
