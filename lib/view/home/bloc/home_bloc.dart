@@ -35,7 +35,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         !_categoryList[event.index].isSelected;
     emit(CategoryItemSelected(categoryList: _categoryList));
     emit(LoadingState());
-    await Future.delayed(const Duration(seconds: 0));
+    await Future.delayed(const Duration(seconds: 2));
 
     _filteredList = itemList
         .where((element) => categoryList.any((category) =>
@@ -67,7 +67,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     }
     emit(HomeInitialState());
     emit(LoadingState());
-    await Future.delayed(const Duration(seconds: 0));
+    await Future.delayed(const Duration(seconds: 2));
     emit(FilteredItemSuccessfulSelected(filteredList: _rangeList));
   }
 
