@@ -113,10 +113,12 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _filterListBuilder(HomeState state) {
     return state is LoadingState
         ? const SliverToBoxAdapter(
-            child: SizedBox(
-              width: 10,
-              child: AspectRatio(
-                  aspectRatio: 1.0, child: CircularProgressIndicator()),
+            child: Center(
+              child: SizedBox(
+                width: 30,
+                height: 30,
+                child: CircularProgressIndicator(),
+              ),
             ),
           )
         : _filteredList();
