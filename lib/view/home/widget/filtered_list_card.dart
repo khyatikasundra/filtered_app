@@ -3,9 +3,13 @@ import 'package:flutter/material.dart';
 
 class FilteredListCard extends StatelessWidget {
   final int index;
-  final List<ItemModel> filteredList;
+  final ItemModel filteredList;
+  final VoidCallback? likeButtonPressed;
   const FilteredListCard(
-      {required this.index, required this.filteredList, super.key});
+      {required this.index,
+      required this.filteredList,
+      this.likeButtonPressed,
+      super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -13,11 +17,16 @@ class FilteredListCard extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
       child: ListTile(
         title: Text(
-          filteredList[index].itemName,
+          filteredList.itemName,
           style: const TextStyle(fontSize: 20),
         ),
-        subtitle: Text("Rs.${filteredList[index].prices.toString()}"),
-        trailing: const Icon(Icons.favorite),
+        subtitle: Text("Rs.${filteredList.prices.toString()}"),
+        trailing: IconButton(
+          onPressed: likeButtonPressed,
+          icon: filteredList.isFavorite
+              ? const Icon(Icons.favorite)
+              : const Icon(Icons.favorite_border),
+        ),
       ),
     );
   }

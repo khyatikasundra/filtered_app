@@ -1,30 +1,46 @@
 import 'package:equatable/equatable.dart';
 import 'package:filter_app/model/category_model.dart';
 import 'package:filter_app/model/item_model.dart';
+import 'package:filter_app/model/price_model.dart';
 
 class HomeState extends Equatable {
-  final List<ItemModel> filteredList;
-  const HomeState({required this.filteredList});
-
   @override
   List<Object?> get props => [];
 }
 
 class HomeInitialState extends HomeState {
-  const HomeInitialState({required super.filteredList});
+  final List<ItemModel> filteredList;
+  HomeInitialState({required this.filteredList});
 }
 
-class CategoryItemSuccessfulSelected extends HomeState {
+class FilteredInitialListPassSuccessful extends HomeState {
+  final List<ItemModel> filteredList;
   final List<CategoryModel> categoryList;
-  const CategoryItemSuccessfulSelected(
-      {required super.filteredList, required this.categoryList});
+  final List<PriceRangeModel> priceList;
+  FilteredInitialListPassSuccessful(
+      {required this.filteredList,
+      required this.categoryList,
+      required this.priceList});
+}
+
+class LoadingState extends HomeState {}
+
+class FilteredItemSuccessfulSelected extends HomeState {
+  final List<ItemModel> filteredList;
+
+  FilteredItemSuccessfulSelected({required this.filteredList});
   @override
   List<Object?> get props => [identityHashCode(this)];
 }
 
-class PriceRangeSuccessfulSelected extends HomeState {
-  const PriceRangeSuccessfulSelected(
-      {required super.filteredList});
-  @override
-  List<Object?> get props => [identityHashCode(this)];
+class CategoryItemSelected extends HomeState {
+  final List<CategoryModel> categoryList;
+
+  CategoryItemSelected({required this.categoryList});
+}
+
+class PriceItemSelected extends HomeState {
+  final List<PriceRangeModel> priceList;
+
+  PriceItemSelected({required this.priceList});
 }

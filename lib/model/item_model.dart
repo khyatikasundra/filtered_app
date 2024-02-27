@@ -4,11 +4,12 @@ class ItemModel {
   String itemName;
   int prices;
   GroceryCategory groceryCategory;
-  ItemModel({
-    required this.itemName,
-    required this.prices,
-    required this.groceryCategory,
-  });
+  bool isFavorite;
+  ItemModel(
+      {required this.itemName,
+      required this.prices,
+      required this.groceryCategory,
+      this.isFavorite = false});
 }
 
 List<ItemModel> itemList = [
@@ -20,6 +21,10 @@ List<ItemModel> itemList = [
       itemName: "Basil",
       prices: 10,
       groceryCategory: GroceryCategory.herdsAndSpices),
+  ItemModel(
+      itemName: "Bananas",
+      prices: 2000,
+      groceryCategory: GroceryCategory.fruit),
   ItemModel(
       itemName: "Cheerios",
       prices: 50,
@@ -45,8 +50,6 @@ List<ItemModel> itemList = [
       prices: 200,
       groceryCategory: GroceryCategory.fruit),
   ItemModel(
-      itemName: "Bananas", prices: 2000, groceryCategory: GroceryCategory.fruit),
-  ItemModel(
       itemName: "Grapefruit",
       prices: 200,
       groceryCategory: GroceryCategory.fruit),
@@ -57,7 +60,9 @@ List<ItemModel> itemList = [
   ItemModel(
       itemName: "Oranges", prices: 200, groceryCategory: GroceryCategory.fruit),
   ItemModel(
-      itemName: "Peaches", prices: 3000, groceryCategory: GroceryCategory.fruit),
+      itemName: "Peaches",
+      prices: 3000,
+      groceryCategory: GroceryCategory.fruit),
   ItemModel(
       itemName: "Cinnamon",
       prices: 900,

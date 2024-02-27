@@ -5,6 +5,8 @@ abstract class HomeEvent extends Equatable {
   List<Object?> get props => [];
 }
 
+class GetFilteredList extends HomeEvent {}
+
 class OnCategorySelectionEvent extends HomeEvent {
   final int index;
   OnCategorySelectionEvent({required this.index});
@@ -13,4 +15,9 @@ class OnCategorySelectionEvent extends HomeEvent {
 class OnPriceRangeSelectionEvent extends HomeEvent {
   final int index;
   OnPriceRangeSelectionEvent({required this.index});
+}
+
+class OnClickFavoriteIconEvent extends HomeEvent {
+  final int index;
+  OnClickFavoriteIconEvent({required this.index});
 }
