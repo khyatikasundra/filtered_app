@@ -11,7 +11,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   List<ItemModel> _filteredList = [];
   List<CategoryModel> _categoryList = [];
   List<PriceRangeModel> _priceList = [];
-  List<ItemModel> _rangeList = [];
   HomeBloc() : super(HomeInitialState()) {
     on<GetFilteredList>(_getFilteredList);
     on<OnCategorySelectionEvent>(_categorySelection);
@@ -51,9 +50,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   FutureOr<void> _priceSelection(
       OnPriceRangeSelectionEvent event, Emitter<HomeState> emit) async {
-    _rangeList = _filteredList;
-
-    _rangeList = _rangeList.where((element) {
+    _filteredList = _filteredList.where((element) {
       if (_priceList[event.index].maxPrice == null) {
         return element.prices >= _priceList[event.index].minPrice;
       } else {
@@ -68,12 +65,14 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     emit(HomeInitialState());
     emit(LoadingState());
     await Future.delayed(const Duration(seconds: 2));
-    emit(FilteredItemSuccessfulSelected(filteredList: _rangeList));
+    emit(FilteredItemSuccessfulSelected(filteredList: _filteredList));
   }
 
   FutureOr<void> _likeButtonPressed(
       OnClickFavoriteIconEvent event, Emitter<HomeState> emit) {
-    _rangeList[event.index].isFavorite = !_rangeList[event.index].isFavorite;
-    emit(FilteredItemSuccessfulSelected(filteredList: _rangeList));
+    _filteredList[event.index].isFavorite =
+        !_filteredList[event.index].isFavorite;
+
+    emit(FilteredItemSuccessfulSelected(filteredList: _filteredList));
   }
 }
