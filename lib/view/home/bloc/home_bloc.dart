@@ -73,8 +73,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   FutureOr<void> _likeButtonPressed(
       OnClickFavoriteIconEvent event, Emitter<HomeState> emit) {
-    _rangeList[event.index].isFavorite =
-        !_rangeList[event.index].isFavorite;
+    _rangeList[event.index].isFavorite = !_rangeList[event.index].isFavorite;
     emit(FilteredItemSuccessfulSelected(filteredList: _rangeList));
   }
 }
