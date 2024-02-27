@@ -11,6 +11,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   List<ItemModel> _filteredList = [];
   List<CategoryModel> _categoryList = [];
   List<PriceRangeModel> _priceList = [];
+  List<ItemModel> _rangeList = [];
   HomeBloc() : super(HomeInitialState()) {
     on<GetFilteredList>(_getFilteredList);
     on<OnCategorySelectionEvent>(_categorySelection);
@@ -34,7 +35,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         !_categoryList[event.index].isSelected;
     emit(CategoryItemSelected(categoryList: _categoryList));
     emit(LoadingState());
-    await Future.delayed(const Duration(seconds: 2));
+    await Future.delayed(const Duration(seconds: 0));
 
     _filteredList = itemList
         .where((element) => categoryList.any((category) =>
@@ -50,9 +51,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   FutureOr<void> _priceSelection(
       OnPriceRangeSelectionEvent event, Emitter<HomeState> emit) async {
-    List<ItemModel> rangeList = _filteredList;
+    _rangeList = _filteredList;
 
-    rangeList = rangeList.where((element) {
+    _rangeList = _rangeList.where((element) {
       if (_priceList[event.index].maxPrice == null) {
         return element.prices >= _priceList[event.index].minPrice;
       } else {
@@ -66,14 +67,14 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     }
     emit(HomeInitialState());
     emit(LoadingState());
-    await Future.delayed(const Duration(seconds: 2));
-    emit(FilteredItemSuccessfulSelected(filteredList: rangeList));
+    await Future.delayed(const Duration(seconds: 0));
+    emit(FilteredItemSuccessfulSelected(filteredList: _rangeList));
   }
 
   FutureOr<void> _likeButtonPressed(
       OnClickFavoriteIconEvent event, Emitter<HomeState> emit) {
-    _filteredList[event.index].isFavorite =
-        !_filteredList[event.index].isFavorite;
-    emit(FilteredItemSuccessfulSelected(filteredList: _filteredList));
+    _rangeList[event.index].isFavorite =
+        !_rangeList[event.index].isFavorite;
+    emit(FilteredItemSuccessfulSelected(filteredList: _rangeList));
   }
 }

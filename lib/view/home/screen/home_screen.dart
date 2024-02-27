@@ -42,19 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
   BlocBuilder<HomeBloc, HomeState> _blocBuilder() {
     return BlocBuilder<HomeBloc, HomeState>(
       builder: (context, state) {
-        if (state is FilteredInitialListPassSuccessful) {
-          _filteredModelList = state.filteredList;
-          _categoryList = state.categoryList;
-          _priceList = state.priceList;
-        }
-        if (state is FilteredItemSuccessfulSelected) {
-          _filteredModelList = state.filteredList;
-        }
-
-        if (state is CategoryItemSelected) {
-          _categoryList = state.categoryList;
-        }
-
+        _stateEmitted(state);
         return SafeArea(
             child: CustomScrollView(
           slivers: [
@@ -65,6 +53,21 @@ class _HomeScreenState extends State<HomeScreen> {
         ));
       },
     );
+  }
+
+  void _stateEmitted(HomeState state) {
+    if (state is FilteredInitialListPassSuccessful) {
+      _filteredModelList = state.filteredList;
+      _categoryList = state.categoryList;
+      _priceList = state.priceList;
+    }
+    if (state is FilteredItemSuccessfulSelected) {
+      _filteredModelList = state.filteredList;
+    }
+
+    if (state is CategoryItemSelected) {
+      _categoryList = state.categoryList;
+    }
   }
 
   AppBar _appBar() {
