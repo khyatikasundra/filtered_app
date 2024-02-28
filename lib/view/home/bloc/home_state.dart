@@ -18,6 +18,9 @@ class FilteredInitialListPassSuccessful extends HomeState {
       {required this.filteredList,
       required this.categoryList,
       required this.priceList});
+  @override
+  List<Object?> get props =>
+      [filteredList, categoryList, priceList, identityHashCode(this)];
 }
 
 class LoadingState extends HomeState {}
@@ -27,11 +30,13 @@ class FilteredItemSuccessfulSelected extends HomeState {
 
   FilteredItemSuccessfulSelected({required this.filteredList});
   @override
-  List<Object?> get props => [identityHashCode(this)];
+  List<Object?> get props => [filteredList, identityHashCode(this)];
 }
 
 class CategoryItemSelected extends HomeState {
   final List<CategoryModel> categoryList;
 
   CategoryItemSelected({required this.categoryList});
+  @override
+  List<Object?> get props => [categoryList, identityHashCode(this)];
 }

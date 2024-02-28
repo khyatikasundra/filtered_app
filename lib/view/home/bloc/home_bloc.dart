@@ -11,8 +11,10 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   List<ItemModel> _filteredList = [];
   List<CategoryModel> _categoryList = [];
   List<PriceRangeModel> _priceList = [];
+  int index = 0;
   HomeBloc() : super(HomeInitialState()) {
     on<GetFilteredList>(_getFilteredList);
+    on<FilteredListEmittingEvent>(_passingFilteredList);
     on<OnCategorySelectionEvent>(_categorySelection);
     on<OnPriceRangeSelectionEvent>(_priceSelection);
     on<OnClickFavoriteIconEvent>(_likeButtonPressed);
@@ -28,44 +30,43 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         priceList: _priceList));
   }
 
+  List<ItemModel> _getFilterItems(List<GroceryCategory> selectedCategories,
+      PriceRangeModel range, List<ItemModel> allItems) {
+    return allItems
+        .where((e) =>
+            (range.maxPrice == null
+                ? e.prices >= range.minPrice
+                : (e.prices >= range.minPrice &&
+                    e.prices <= range.maxPrice!)) &&
+            (selectedCategories.isEmpty ||
+                selectedCategories.contains(e.groceryCategory)))
+        .toList();
+  }
+
+  FutureOr<void> _passingFilteredList(
+      FilteredListEmittingEvent event, Emitter<HomeState> emit) async {
+    List<GroceryCategory> selectedCategories = _categoryList
+        .where((element) => element.isSelected)
+        .map((e) => e.groceryCategory)
+        .toList();
+    PriceRangeModel range = _priceList[index];
+    _filteredList = _getFilterItems(selectedCategories, range, itemList);
+    emit(LoadingState());
+    await Future.delayed(const Duration(seconds: 3));
+    emit(FilteredItemSuccessfulSelected(filteredList: _filteredList));
+  }
+
   FutureOr<void> _categorySelection(
-      OnCategorySelectionEvent event, Emitter<HomeState> emit) async {
+      OnCategorySelectionEvent event, Emitter<HomeState> emit) {
     _categoryList[event.index].isSelected =
         !_categoryList[event.index].isSelected;
     emit(CategoryItemSelected(categoryList: _categoryList));
-    emit(LoadingState());
-    await Future.delayed(const Duration(seconds: 2));
-
-    _filteredList = itemList
-        .where((element) => categoryList.any((category) =>
-            category.isSelected &&
-            category.groceryCategory == element.groceryCategory))
-        .toList();
-
-    if (_filteredList.isEmpty) {
-      _filteredList = itemList;
-    }
-    emit(FilteredItemSuccessfulSelected(filteredList: _filteredList));
   }
 
   FutureOr<void> _priceSelection(
       OnPriceRangeSelectionEvent event, Emitter<HomeState> emit) async {
-    _filteredList = _filteredList.where((element) {
-      if (_priceList[event.index].maxPrice == null) {
-        return element.prices >= _priceList[event.index].minPrice;
-      } else {
-        return element.prices >= _priceList[event.index].minPrice &&
-            element.prices <= _priceList[event.index].maxPrice!;
-      }
-    }).toList();
-
-    if (event.index == 0) {
-      _filteredList = itemList;
-    }
+    index = event.index;
     emit(HomeInitialState());
-    emit(LoadingState());
-    await Future.delayed(const Duration(seconds: 2));
-    emit(FilteredItemSuccessfulSelected(filteredList: _filteredList));
   }
 
   FutureOr<void> _likeButtonPressed(

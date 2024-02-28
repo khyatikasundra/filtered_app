@@ -97,6 +97,7 @@ class _HomeScreenState extends State<HomeScreen> {
       index: index,
       onPress: () {
         _homeBloc.add(OnCategorySelectionEvent(index: index));
+        _homeBloc.add(FilteredListEmittingEvent());
       },
       category: category,
     );
@@ -133,6 +134,7 @@ class _HomeScreenState extends State<HomeScreen> {
       onPress: () {
         _isPriceSelectedIndex = index;
         _homeBloc.add(OnPriceRangeSelectionEvent(index: index));
+        _homeBloc.add(FilteredListEmittingEvent());
       },
       index: index,
       price: prices,
