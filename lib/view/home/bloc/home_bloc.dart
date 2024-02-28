@@ -64,7 +64,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   }
 
   FutureOr<void> _priceSelection(
-      OnPriceRangeSelectionEvent event, Emitter<HomeState> emit) async {
+      OnPriceRangeSelectionEvent event, Emitter<HomeState> emit){
     index = event.index;
     emit(HomeInitialState());
   }
