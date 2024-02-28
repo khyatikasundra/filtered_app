@@ -1,114 +1,48 @@
 import 'package:filter_app/model/category_model.dart';
 
 class ItemModel {
-  String itemName;
-  int prices;
-  GroceryCategory groceryCategory;
+  final String itemName;
+  final int prices;
+  final Category category;
   bool isFavorite;
   ItemModel(
       {required this.itemName,
       required this.prices,
-      required this.groceryCategory,
+      required this.category,
       this.isFavorite = false});
 }
 
 List<ItemModel> itemList = [
+  ItemModel(itemName: "Corn Flakes", prices: 40, category: Category.cereals),
+  ItemModel(itemName: "Basil", prices: 10, category: Category.herdsAndSpices),
+  ItemModel(itemName: "Bananas", prices: 2000, category: Category.fruit),
+  ItemModel(itemName: "Cheerios", prices: 50, category: Category.cereals),
+  ItemModel(itemName: "Lucky Charms", prices: 60, category: Category.cereals),
+  ItemModel(itemName: "Milk", prices: 50, category: Category.dairy),
+  ItemModel(itemName: "Cheese", prices: 100, category: Category.dairy),
+  ItemModel(itemName: "Yogurt", prices: 80, category: Category.dairy),
+  ItemModel(itemName: "Butter", prices: 120, category: Category.dairy),
+  ItemModel(itemName: "Cream", prices: 70, category: Category.dairy),
+  ItemModel(itemName: "Apples", prices: 200, category: Category.fruit),
+  ItemModel(itemName: "Avocados", prices: 200, category: Category.fruit),
+  ItemModel(itemName: "Grapefruit", prices: 200, category: Category.fruit),
+  ItemModel(itemName: "Rice Krispies", prices: 45, category: Category.cereals),
+  ItemModel(itemName: "Oranges", prices: 200, category: Category.fruit),
+  ItemModel(itemName: "Peaches", prices: 3000, category: Category.fruit),
   ItemModel(
-      itemName: "Corn Flakes",
-      prices: 40,
-      groceryCategory: GroceryCategory.cereals),
+      itemName: "Cinnamon", prices: 900, category: Category.herdsAndSpices),
+  ItemModel(itemName: "Ginger", prices: 600, category: Category.herdsAndSpices),
+  ItemModel(itemName: "Frosted Flakes", prices: 55, category: Category.cereals),
+  ItemModel(itemName: "Oregano", prices: 12, category: Category.herdsAndSpices),
   ItemModel(
-      itemName: "Basil",
-      prices: 10,
-      groceryCategory: GroceryCategory.herdsAndSpices),
+      itemName: "Paprika", prices: 1500, category: Category.herdsAndSpices),
+  ItemModel(itemName: "Asparagus", prices: 200, category: Category.vegetable),
+  ItemModel(itemName: "Kiwi", prices: 200, category: Category.fruit),
+  ItemModel(itemName: "Broccoli", prices: 200, category: Category.vegetable),
   ItemModel(
-      itemName: "Bananas",
-      prices: 2000,
-      groceryCategory: GroceryCategory.fruit),
-  ItemModel(
-      itemName: "Cheerios",
-      prices: 50,
-      groceryCategory: GroceryCategory.cereals),
-  ItemModel(
-      itemName: "Lucky Charms",
-      prices: 60,
-      groceryCategory: GroceryCategory.cereals),
-  ItemModel(
-      itemName: "Milk", prices: 50, groceryCategory: GroceryCategory.dairy),
-  ItemModel(
-      itemName: "Cheese", prices: 100, groceryCategory: GroceryCategory.dairy),
-  ItemModel(
-      itemName: "Yogurt", prices: 80, groceryCategory: GroceryCategory.dairy),
-  ItemModel(
-      itemName: "Butter", prices: 120, groceryCategory: GroceryCategory.dairy),
-  ItemModel(
-      itemName: "Cream", prices: 70, groceryCategory: GroceryCategory.dairy),
-  ItemModel(
-      itemName: "Apples", prices: 200, groceryCategory: GroceryCategory.fruit),
-  ItemModel(
-      itemName: "Avocados",
-      prices: 200,
-      groceryCategory: GroceryCategory.fruit),
-  ItemModel(
-      itemName: "Grapefruit",
-      prices: 200,
-      groceryCategory: GroceryCategory.fruit),
-  ItemModel(
-      itemName: "Rice Krispies",
-      prices: 45,
-      groceryCategory: GroceryCategory.cereals),
-  ItemModel(
-      itemName: "Oranges", prices: 200, groceryCategory: GroceryCategory.fruit),
-  ItemModel(
-      itemName: "Peaches",
-      prices: 3000,
-      groceryCategory: GroceryCategory.fruit),
-  ItemModel(
-      itemName: "Cinnamon",
-      prices: 900,
-      groceryCategory: GroceryCategory.herdsAndSpices),
-  ItemModel(
-      itemName: "Ginger",
-      prices: 600,
-      groceryCategory: GroceryCategory.herdsAndSpices),
-  ItemModel(
-      itemName: "Frosted Flakes",
-      prices: 55,
-      groceryCategory: GroceryCategory.cereals),
-  ItemModel(
-      itemName: "Oregano",
-      prices: 12,
-      groceryCategory: GroceryCategory.herdsAndSpices),
-  ItemModel(
-      itemName: "Paprika",
-      prices: 1500,
-      groceryCategory: GroceryCategory.herdsAndSpices),
-  ItemModel(
-      itemName: "Asparagus",
-      prices: 200,
-      groceryCategory: GroceryCategory.vegetable),
-  ItemModel(
-      itemName: "Kiwi", prices: 200, groceryCategory: GroceryCategory.fruit),
-  ItemModel(
-      itemName: "Broccoli",
-      prices: 200,
-      groceryCategory: GroceryCategory.vegetable),
-  ItemModel(
-      itemName: "Cauliflower",
-      prices: 3500,
-      groceryCategory: GroceryCategory.vegetable),
-  ItemModel(
-      itemName: "Corn",
-      prices: 200,
-      groceryCategory: GroceryCategory.vegetable),
-  ItemModel(
-      itemName: "Cucumbers",
-      prices: 200,
-      groceryCategory: GroceryCategory.vegetable),
-  ItemModel(
-      itemName: "Melons", prices: 200, groceryCategory: GroceryCategory.fruit),
-  ItemModel(
-      itemName: "Eggplant",
-      prices: 550,
-      groceryCategory: GroceryCategory.vegetable),
+      itemName: "Cauliflower", prices: 3500, category: Category.vegetable),
+  ItemModel(itemName: "Corn", prices: 200, category: Category.vegetable),
+  ItemModel(itemName: "Cucumbers", prices: 200, category: Category.vegetable),
+  ItemModel(itemName: "Melons", prices: 200, category: Category.fruit),
+  ItemModel(itemName: "Eggplant", prices: 550, category: Category.vegetable),
 ];

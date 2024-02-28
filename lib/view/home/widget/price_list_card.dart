@@ -5,7 +5,7 @@ class PriceListCard extends StatelessWidget {
   final int index;
   final VoidCallback? onPress;
   final bool isSelected;
-  final PriceRangeModel price;
+  final PriceModel price;
   const PriceListCard(
       {required this.price,
       this.index = 0,
@@ -22,7 +22,7 @@ class PriceListCard extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Text(
-            price.priceRange.toString(),
+            price.priceRangeString.toString(),
             style: const TextStyle(fontSize: 20),
           ),
         ),

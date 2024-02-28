@@ -10,33 +10,39 @@ class HomeState extends Equatable {
 
 class HomeInitialState extends HomeState {}
 
-class FilteredInitialListPassSuccessful extends HomeState {
+class OnGetInitialDataSuccessful extends HomeState {
   final List<ItemModel> filteredList;
   final List<CategoryModel> categoryList;
-  final List<PriceRangeModel> priceList;
-  FilteredInitialListPassSuccessful(
+  final List<PriceModel> priceList;
+  OnGetInitialDataSuccessful(
       {required this.filteredList,
       required this.categoryList,
       required this.priceList});
   @override
-  List<Object?> get props =>
-      [filteredList, categoryList, priceList, identityHashCode(this)];
+  List<Object?> get props => [filteredList, categoryList, priceList];
 }
 
-class LoadingState extends HomeState {}
+class HomeLoadingState extends HomeState {}
 
-class FilteredItemSuccessfulSelected extends HomeState {
+class OnGetFilteredItemList extends HomeState {
   final List<ItemModel> filteredList;
 
-  FilteredItemSuccessfulSelected({required this.filteredList});
+  OnGetFilteredItemList({required this.filteredList});
   @override
-  List<Object?> get props => [filteredList, identityHashCode(this)];
+  List<Object?> get props => [filteredList];
 }
 
-class CategoryItemSelected extends HomeState {
+class OnCategorySelectionState extends HomeState {
   final List<CategoryModel> categoryList;
 
-  CategoryItemSelected({required this.categoryList});
+  OnCategorySelectionState({required this.categoryList});
   @override
-  List<Object?> get props => [categoryList, identityHashCode(this)];
+  List<Object?> get props => [categoryList];
+}
+
+class OnPriceSelectionState extends HomeState {
+  final int priceListSelectedIndex;
+  OnPriceSelectionState({required this.priceListSelectedIndex});
+  @override
+  List<Object?> get props => [priceListSelectedIndex];
 }

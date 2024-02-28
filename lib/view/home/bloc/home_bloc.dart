@@ -10,28 +10,28 @@ import 'package:filter_app/view/home/bloc/home_state.dart';
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   List<ItemModel> _filteredList = [];
   List<CategoryModel> _categoryList = [];
-  List<PriceRangeModel> _priceList = [];
-  int index = 0;
+  List<PriceModel> _priceList = [];
+  int _selectedPriceIndex = 0;
   HomeBloc() : super(HomeInitialState()) {
-    on<GetFilteredList>(_getFilteredList);
-    on<FilteredListEmittingEvent>(_passingFilteredList);
-    on<OnCategorySelectionEvent>(_categorySelection);
-    on<OnPriceRangeSelectionEvent>(_priceSelection);
-    on<OnClickFavoriteIconEvent>(_likeButtonPressed);
+    on<GetInitialDataEvent>(_getInitialData);
+    on<GetFilteredListEvent>(_getFilteredList);
+    on<CategorySelectionEvent>(_categorySelection);
+    on<PriceSelectionEvent>(_priceSelection);
+    on<ItemLikeUnlikeEvent>(_itemLikeUnlike);
   }
-  FutureOr<void> _getFilteredList(
-      GetFilteredList event, Emitter<HomeState> emit) {
+  FutureOr<void> _getInitialData(
+      GetInitialDataEvent event, Emitter<HomeState> emit) {
     _filteredList = itemList;
     _categoryList = categoryList;
     _priceList = priceRangeList;
-    emit(FilteredInitialListPassSuccessful(
+    emit(OnGetInitialDataSuccessful(
         filteredList: _filteredList,
         categoryList: _categoryList,
         priceList: _priceList));
   }
 
-  List<ItemModel> _getFilterItems(List<GroceryCategory> selectedCategories,
-      PriceRangeModel range, List<ItemModel> allItems) {
+  List<ItemModel> _getFilterItems(List<Category> selectedCategories,
+      PriceModel range, List<ItemModel> allItems) {
     return allItems
         .where((e) =>
             (range.maxPrice == null
@@ -39,41 +39,42 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
                 : (e.prices >= range.minPrice &&
                     e.prices <= range.maxPrice!)) &&
             (selectedCategories.isEmpty ||
-                selectedCategories.contains(e.groceryCategory)))
+                selectedCategories.contains(e.category)))
         .toList();
   }
 
-  FutureOr<void> _passingFilteredList(
-      FilteredListEmittingEvent event, Emitter<HomeState> emit) async {
-    List<GroceryCategory> selectedCategories = _categoryList
-        .where((element) => element.isSelected)
-        .map((e) => e.groceryCategory)
-        .toList();
-    PriceRangeModel range = _priceList[index];
-    _filteredList = _getFilterItems(selectedCategories, range, itemList);
-    emit(LoadingState());
+  FutureOr<void> _getFilteredList(
+      GetFilteredListEvent event, Emitter<HomeState> emit) async {
+    emit(HomeLoadingState());
     await Future.delayed(const Duration(seconds: 3));
-    emit(FilteredItemSuccessfulSelected(filteredList: _filteredList));
+    List<Category> selectedCategories = _categoryList
+        .where((element) => element.isSelected)
+        .map((e) => e.category)
+        .toList();
+    PriceModel range = _priceList[_selectedPriceIndex];
+    _filteredList = _getFilterItems(selectedCategories, range, itemList);
+
+    emit(OnGetFilteredItemList(filteredList: _filteredList));
   }
 
   FutureOr<void> _categorySelection(
-      OnCategorySelectionEvent event, Emitter<HomeState> emit) {
+      CategorySelectionEvent event, Emitter<HomeState> emit) {
     _categoryList[event.index].isSelected =
         !_categoryList[event.index].isSelected;
-    emit(CategoryItemSelected(categoryList: _categoryList));
+    emit(OnCategorySelectionState(categoryList: _categoryList));
   }
 
   FutureOr<void> _priceSelection(
-      OnPriceRangeSelectionEvent event, Emitter<HomeState> emit){
-    index = event.index;
-    emit(HomeInitialState());
+      PriceSelectionEvent event, Emitter<HomeState> emit) {
+    _selectedPriceIndex = event.index;
+    emit(OnPriceSelectionState(priceListSelectedIndex: _selectedPriceIndex));
   }
 
-  FutureOr<void> _likeButtonPressed(
-      OnClickFavoriteIconEvent event, Emitter<HomeState> emit) {
+  FutureOr<void> _itemLikeUnlike(
+      ItemLikeUnlikeEvent event, Emitter<HomeState> emit) {
     _filteredList[event.index].isFavorite =
         !_filteredList[event.index].isFavorite;
 
-    emit(FilteredItemSuccessfulSelected(filteredList: _filteredList));
+    emit(OnGetFilteredItemList(filteredList: _filteredList));
   }
 }

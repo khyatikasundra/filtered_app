@@ -5,27 +5,29 @@ abstract class HomeEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-class GetFilteredList extends HomeEvent {}
+class HomeInitialEvent extends HomeEvent {}
 
-class OnCategorySelectionEvent extends HomeEvent {
+class GetInitialDataEvent extends HomeEvent {}
+
+class CategorySelectionEvent extends HomeEvent {
   final int index;
-  OnCategorySelectionEvent({required this.index});
+  CategorySelectionEvent({required this.index});
   @override
   List<Object?> get props => [index];
 }
 
-class OnPriceRangeSelectionEvent extends HomeEvent {
+class PriceSelectionEvent extends HomeEvent {
   final int index;
-  OnPriceRangeSelectionEvent({required this.index});
+  PriceSelectionEvent({required this.index});
   @override
   List<Object?> get props => [index];
 }
 
-class OnClickFavoriteIconEvent extends HomeEvent {
+class ItemLikeUnlikeEvent extends HomeEvent {
   final int index;
-  OnClickFavoriteIconEvent({required this.index});
+  ItemLikeUnlikeEvent({required this.index});
   @override
   List<Object?> get props => [index];
 }
 
-class FilteredListEmittingEvent extends HomeEvent {}
+class GetFilteredListEvent extends HomeEvent {}
