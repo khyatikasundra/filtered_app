@@ -29,7 +29,7 @@ class OnGetFilteredItemList extends HomeState {
 
   OnGetFilteredItemList({required this.filteredList});
   @override
-  List<Object?> get props => [filteredList];
+  List<Object?> get props => [filteredList, identityHashCode(this)];
 }
 
 class OnCategorySelectionState extends HomeState {

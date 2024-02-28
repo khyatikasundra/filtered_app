@@ -52,6 +52,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         .map((e) => e.category)
         .toList();
     PriceModel range = _priceList[_selectedPriceIndex];
+    
     _filteredList = _getFilterItems(selectedCategories, range, itemList);
 
     emit(OnGetFilteredItemList(filteredList: _filteredList));
