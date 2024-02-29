@@ -40,10 +40,13 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  BlocBuilder<HomeBloc, HomeState> _blocBuilder() {
-    return BlocBuilder<HomeBloc, HomeState>(
-      builder: (context, state) {
+  BlocConsumer<HomeBloc, HomeState> _blocBuilder() {
+    return BlocConsumer<HomeBloc, HomeState>(
+      listener: (context, state) {
         _stateEmitted(state);
+      },
+      builder: (context, state) {
+        _stateBuilderEmitted(state);
         return SafeArea(
             child: CustomScrollView(
           slivers: [
@@ -56,7 +59,13 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  void _stateEmitted(HomeState state) {
+  void _stateBuilderEmitted(HomeState state) {
+    if (state is OnPriceSelectionState) {
+      _homeBloc.add(GetFilteredListEvent());
+    }
+  }
+
+  void _stateEmitted(HomeState state) async {
     if (state is OnGetInitialDataSuccessful) {
       _filteredModelList = state.filteredList;
       _categoryList = state.categoryList;
@@ -65,14 +74,12 @@ class _HomeScreenState extends State<HomeScreen> {
     if (state is OnGetFilteredItemList) {
       _filteredModelList = state.filteredList;
     }
-
     if (state is OnCategorySelectionState) {
       _categoryList = state.categoryList;
       _homeBloc.add(GetFilteredListEvent());
     }
     if (state is OnPriceSelectionState) {
       _priceListSelectedIndex = state.priceListSelectedIndex;
-      _homeBloc.add(GetFilteredListEvent());
     }
   }
 
@@ -137,6 +144,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return PriceListCard(
       isSelected: _priceListSelectedIndex == index,
       onPress: () {
+        print("price index event $index");
         _homeBloc.add(PriceSelectionEvent(index: index));
       },
       index: index,

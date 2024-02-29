@@ -44,5 +44,5 @@ class OnPriceSelectionState extends HomeState {
   final int priceListSelectedIndex;
   OnPriceSelectionState({required this.priceListSelectedIndex});
   @override
-  List<Object?> get props => [priceListSelectedIndex];
+  List<Object?> get props => [priceListSelectedIndex, identityHashCode(this)];
 }

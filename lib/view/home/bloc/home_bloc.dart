@@ -52,7 +52,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         .map((e) => e.category)
         .toList();
     PriceModel range = _priceList[_selectedPriceIndex];
-    
+
     _filteredList = _getFilterItems(selectedCategories, range, itemList);
 
     emit(OnGetFilteredItemList(filteredList: _filteredList));
@@ -68,6 +68,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   FutureOr<void> _priceSelection(
       PriceSelectionEvent event, Emitter<HomeState> emit) {
     _selectedPriceIndex = event.index;
+    print("index emitted $_selectedPriceIndex");
     emit(OnPriceSelectionState(priceListSelectedIndex: _selectedPriceIndex));
   }
 
@@ -75,7 +76,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       ItemLikeUnlikeEvent event, Emitter<HomeState> emit) {
     _filteredList[event.index].isFavorite =
         !_filteredList[event.index].isFavorite;
-
     emit(OnGetFilteredItemList(filteredList: _filteredList));
   }
 }
